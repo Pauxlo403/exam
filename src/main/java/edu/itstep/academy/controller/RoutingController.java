@@ -16,13 +16,19 @@ public class RoutingController
     private AcademyRepository academyRepository;
 
     @RequestMapping("/")
-    public String showAll(Model model)
+    public String home()
     {
-        List<Student> students = academyRepository.findAll();
-
-        model.addAttribute("students", students);
-        return "teacher-all-students";
+        return "home";
     }
+
+//    @RequestMapping("/")
+//    public String showAll(Model model)
+//    {
+//        List<Student> students = academyRepository.findAll();
+//
+//        model.addAttribute("students", students);
+//        return "teacher-all-students";
+//    }
 //
 //    @RequestMapping("/createContact")
 //    public String create(Model model)
