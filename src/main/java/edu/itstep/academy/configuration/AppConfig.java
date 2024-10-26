@@ -1,7 +1,4 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
+
 
 package edu.itstep.academy.configuration;
 
@@ -19,9 +16,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan(
-        basePackages = {"edu.itstep.academy"}
-)
+@ComponentScan("edu.itstep.academy")
 @EnableWebMvc
 @EnableTransactionManagement
 public class AppConfig {
@@ -53,15 +48,17 @@ public class AppConfig {
     }
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory() {
+    public LocalSessionFactoryBean sessionFactory()
+    {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
-        localSessionFactoryBean.setDataSource(this.dataSource());
-        localSessionFactoryBean.setPackagesToScan(new String[]{"edu.itstep.rest.entity"});
-        Properties properties = new Properties();
+        localSessionFactoryBean.setDataSource(dataSource());
+        localSessionFactoryBean.setPackagesToScan("edu.itstep.academy.entity");
+        Properties properties  = new Properties();
         properties.setProperty("hibernate.show_sql", "true");
         localSessionFactoryBean.setHibernateProperties(properties);
         return localSessionFactoryBean;
     }
+
 
     @Bean
     public HibernateTransactionManager transactionManager() {

@@ -1,27 +1,42 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-<h1>Create teacher</h1>
-<form:form action="saveContact" modelAttribute="teacher">
+<h1>Create grade</h1>
+<form:form action="teacherAddGrade" modelAttribute="grade">
     <form:hidden path="id"/>
     <div>
-        <form:input path="firstName" placeholder="first name"/>
+        <label>Student:</label>
+        <select name="idStudent">
+            <c:forEach items="${students}" var="stud">
+                <option value="${stud.id}">${stud}</option>
+            </c:forEach>
+        </select>
+<%--        <form:select path="idStudent" >--%>
+<%--            <form:options items="${students}" itemValue="id"/>--%>
+<%--        </form:select>--%>
+    </div>
+<%--    <div>--%>
+<%--        <label>Subject:</label>--%>
+<%--        <form:select path="subject" >--%>
+<%--            <form:options items="${subjects}"/>--%>
+<%--        </form:select>--%>
+<%--    </div>--%>
+    <div>
+        <label>Date:</label>
+        <input type="date" name="datecurrent" placeholder="Date" value="${grade.datecurrent}"/>
     </div>
     <div>
-        <form:input path="lastName" placeholder="last name"/>
+        <label>Grade:</label>
+        <form:input path="grade" placeholder="grade"/>
     </div>
     <div>
-        <input type="date" name="age" placeholder="Birth date" value="${teacher.age}"/>
-    </div>
-    <div>
-        <form:input path="phone" placeholder="phone name"/>
-    </div>
-    <div>
-        <form:input path="email" placeholder="e-mail"/>
+        <label>Comment:</label>
+        <form:input path="comment" placeholder="comment"/>
     </div>
     <input type="submit" value="Save">
 </form:form>

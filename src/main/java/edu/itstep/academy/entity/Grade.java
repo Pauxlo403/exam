@@ -1,5 +1,7 @@
 package edu.itstep.academy.entity;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -19,6 +21,8 @@ public class Grade
     private String comment;
 
     @Column(name = "datecurrent")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Temporal(TemporalType.DATE)
     private Date datecurrent;
 
     @ManyToOne(cascade = {CascadeType.REFRESH, CascadeType.DETACH, CascadeType.MERGE,
@@ -75,6 +79,26 @@ public class Grade
     public void setDatecurrent(Date datecurrent)
     {
         this.datecurrent = datecurrent;
+    }
+
+    public Subject getSubject()
+    {
+        return subject;
+    }
+
+    public void setSubject(Subject subject)
+    {
+        this.subject = subject;
+    }
+
+    public Student getStudent()
+    {
+        return student;
+    }
+
+    public void setStudent(Student student)
+    {
+        this.student = student;
     }
 
     @Override

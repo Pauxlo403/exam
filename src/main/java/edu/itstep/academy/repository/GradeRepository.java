@@ -1,22 +1,17 @@
 package edu.itstep.academy.repository;
 
+import edu.itstep.academy.entity.Grade;
 import edu.itstep.academy.entity.Student;
 import edu.itstep.academy.entity.Subject;
 import edu.itstep.academy.entity.Teacher;
 
 import java.util.List;
 
-public interface AcademyRepository
+public interface GradeRepository
 {
-    List<Student> findAll();
+    List<Grade> findAllGrades();
 
-    List<Subject> findAllSkills(int id);
-
-    List<Subject> getAllSkills();
-
-    void saveOrUpdate(Teacher teacher);
-
-    Teacher findTeacherById(int id);
+    void saveOrUpdate(Grade grade);
 
     void deleteById(int id);
 }

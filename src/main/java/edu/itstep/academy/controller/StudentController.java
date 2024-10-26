@@ -1,34 +1,39 @@
 package edu.itstep.academy.controller;
 
-import edu.itstep.academy.entity.Student;
-import edu.itstep.academy.repository.AcademyRepository;
+import edu.itstep.academy.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
-public class RoutingController
+public class StudentController
 {
     @Autowired
-    private AcademyRepository academyRepository;
+    private StudentRepository studentRepository;
 
     @RequestMapping("/")
-    public String home()
+    public String homeStudent()
     {
         return "home";
     }
 
-//    @RequestMapping("/")
-//    public String showAll(Model model)
+//    @RequestMapping("/teacher-grade-form")
+//    public String asdasdasdasd(Model model)
 //    {
-//        List<Student> students = academyRepository.findAll();
-//
+//        List<Student> students = academyRepository.findAllStudents();
 //        model.addAttribute("students", students);
-//        return "teacher-all-students";
+//        model.addAttribute("grade", new Grade());
+//
+//        return "teacher-grade-form";
 //    }
+
+    @RequestMapping("/student-all-grades")
+    public String showAll(Model model)
+    {
+
+        return "student-all-grades";
+    }
 //
 //    @RequestMapping("/createContact")
 //    public String create(Model model)

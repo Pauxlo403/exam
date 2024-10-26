@@ -56,10 +56,7 @@ public class Subject
     @Override
     public String toString()
     {
-        return "Skill{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
+        return title;
     }
 
     @Override
