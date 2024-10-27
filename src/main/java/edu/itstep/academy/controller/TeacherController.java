@@ -3,17 +3,15 @@ package edu.itstep.academy.controller;
 import edu.itstep.academy.entity.Grade;
 import edu.itstep.academy.entity.Student;
 import edu.itstep.academy.entity.Subject;
-import edu.itstep.academy.repository.StudentRepository;
-import edu.itstep.academy.repository.SubjectRepository;
 import edu.itstep.academy.service.GradeService;
+import edu.itstep.academy.service.StudentService;
+import edu.itstep.academy.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -23,16 +21,16 @@ public class TeacherController
     GradeService gradeService;
 
     @Autowired
-    StudentRepository studentRepository;
+    StudentService studentService;
 
     @Autowired
-    SubjectRepository subjectRepository;
+    SubjectService subjectService;
 
     @RequestMapping("/teacherCreateGrade")
     public String teacherCreateGrade(Model model)
     {
-        List<Student> students = studentRepository.findAllStudents();
-        List<Subject> subjects = subjectRepository.findAllSubjects();
+        List<Student> students = studentService.findAllStudents();
+        List<Subject> subjects = subjectService.findAllSubjects();
         //Grade grade = new Grade();
         //grade.setDatecurrent(new Date());
         model.addAttribute("grade", new Grade());
@@ -66,8 +64,8 @@ public class TeacherController
     {
         Grade grade = gradeService.updateGrade(gradeId);
 
-        List<Student> students = studentRepository.findAllStudents();
-        List<Subject> subjects = subjectRepository.findAllSubjects();
+        List<Student> students = studentService.findAllStudents();
+        List<Subject> subjects = subjectService.findAllSubjects();
 
         model.addAttribute("grade", grade);
         model.addAttribute("students", students);
