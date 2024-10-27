@@ -9,4 +9,5 @@ import java.util.List;
 public interface SubjectRepository
 {
     List<Subject> findAllSubjects();
+    Subject findSubjectById(int id);
 }

@@ -1,10 +1,15 @@
 package edu.itstep.academy.controller;
 
+import edu.itstep.academy.entity.Grade;
+import edu.itstep.academy.repository.GradeRepository;
 import edu.itstep.academy.repository.StudentRepository;
+import edu.itstep.academy.service.GradeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
 public class StudentController
@@ -12,9 +17,15 @@ public class StudentController
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private GradeRepository gradeRepository;
+
     @RequestMapping("/")
-    public String homeStudent()
+    public String homeStudent(Model model)
     {
+        List<Grade> gradesAllForTeacher = gradeRepository.findAllGrades();
+
+        model.addAttribute("gradesAllForTeacher", gradesAllForTeacher);
         return "home";
     }
 

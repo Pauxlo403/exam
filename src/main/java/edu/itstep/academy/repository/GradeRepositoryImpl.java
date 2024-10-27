@@ -37,6 +37,14 @@ public class GradeRepositoryImpl implements GradeRepository
 
     @Override
     @Transactional
+    public Grade findGradeById(int id)
+    {
+        return sessionFactory
+                .getCurrentSession().get(Grade.class, id);
+    }
+
+    @Override
+    @Transactional
     public void deleteById(int id) {
         sessionFactory
                 .getCurrentSession()

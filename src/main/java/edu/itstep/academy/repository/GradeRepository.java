@@ -13,5 +13,7 @@ public interface GradeRepository
 
     void saveOrUpdate(Grade grade);
 
+    Grade findGradeById(int id);
+
     void deleteById(int id);
 }

@@ -8,24 +8,28 @@
 <body>
 <h1>Create grade</h1>
 <form:form action="teacherAddGrade" modelAttribute="grade">
-    <form:hidden path="id"/>
+    <input type="hidden" name="idGrade" value="${grade.id}">
     <div>
         <label>Student:</label>
         <select name="idStudent">
             <c:forEach items="${students}" var="stud">
-                <option value="${stud.id}">${stud}</option>
+                <option value="${stud.id}"
+                        <c:if test="${stud.id == grade.student.id}">
+                            <c:out value="selected=selected"/>
+                        </c:if>>${stud}</option>
             </c:forEach>
         </select>
-<%--        <form:select path="idStudent" >--%>
-<%--            <form:options items="${students}" itemValue="id"/>--%>
-<%--        </form:select>--%>
     </div>
-<%--    <div>--%>
-<%--        <label>Subject:</label>--%>
-<%--        <form:select path="subject" >--%>
-<%--            <form:options items="${subjects}"/>--%>
-<%--        </form:select>--%>
-<%--    </div>--%>
+    <div>
+        <label>Subject:</label>
+        <select name="idSubject">
+            <c:forEach items="${subjects}" var="subj">
+                <option value="${subj.id}"  <c:if test="${subj.id == grade.subject.id}">
+                    <c:out value="selected=selected"/>
+                </c:if>>${subj}</option>
+            </c:forEach>
+        </select>
+    </div>
     <div>
         <label>Date:</label>
         <input type="date" name="datecurrent" placeholder="Date" value="${grade.datecurrent}"/>

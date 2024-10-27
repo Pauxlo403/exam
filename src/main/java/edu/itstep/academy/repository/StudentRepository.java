@@ -9,7 +9,7 @@ import java.util.List;
 public interface StudentRepository
 {
     List<Student> findAllStudents();
-
+    Student findStudentById(int id);
     List<Subject> getAllSkills();
 
 }

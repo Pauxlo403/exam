@@ -28,6 +28,12 @@ public class StudentRepositoryImpl implements StudentRepository
 
     @Override
     @Transactional
+    public Student findStudentById(int id) {
+        return sessionFactory.getCurrentSession().get(Student.class, id);
+    }
+
+    @Override
+    @Transactional
     public List<Subject> getAllSkills()
     {
         return sessionFactory.getCurrentSession().createQuery("from Subject").list();

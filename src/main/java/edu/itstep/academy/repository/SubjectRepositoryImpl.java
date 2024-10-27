@@ -25,4 +25,10 @@ public class SubjectRepositoryImpl implements SubjectRepository
                 .createQuery("from Subject ", Subject.class)
                 .list();
     }
+
+    @Override
+    @Transactional
+    public Subject findSubjectById(int id) {
+        return sessionFactory.getCurrentSession().get(Subject.class, id);
+    }
 }
