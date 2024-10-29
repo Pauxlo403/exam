@@ -1,29 +1,44 @@
 package edu.itstep.academy.controller;
 
 import edu.itstep.academy.entity.Grade;
+import edu.itstep.academy.entity.Subject;
 import edu.itstep.academy.repository.GradeRepository;
 import edu.itstep.academy.repository.StudentRepository;
 import edu.itstep.academy.service.GradeService;
+import edu.itstep.academy.service.StudentService;
+import edu.itstep.academy.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 
 @Controller
 public class StudentController
 {
     @Autowired
-    private StudentRepository studentRepository;
+    private StudentService studentService;
 
     @Autowired
-    private GradeRepository gradeRepository;
+    private GradeService gradeService;
+
+    @Autowired
+    private SubjectService subjectService;
 
     @RequestMapping("/")
     public String homeStudent(Model model)
     {
-        List<Grade> gradesAllForTeacher = gradeRepository.findAllGrades();
+        List<Grade> gradesAllForTeacher = gradeService.findAllGrades();
 
         model.addAttribute("gradesAllForTeacher", gradesAllForTeacher);
         return "home";
@@ -42,16 +57,35 @@ public class StudentController
     @RequestMapping("/student-all-grades")
     public String showAll(Model model)
     {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String username = principal.getName();
+
+        List<Grade> gradesAllForStudent = gradeService.findAllGradesForStudent(username);
+        List<Subject> subjects = subjectService.findAllSubjects();
+
+        model.addAttribute("gradesAllForStudent", gradesAllForStudent);
+        model.addAttribute("selectedSubjectId", 0);
+        model.addAttribute("subjects", subjects);
+        return "student-all-grades";
+    }
+
+    @RequestMapping("/studentFilter")
+    public String studentFilter(@RequestParam("idSubject") int idSubject,
+                                @RequestParam("dateGrade") @Nullable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+                                Model model)
+    {
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        String username = principal.getName();
+
+        List<Grade> filteredGradesForStudent = gradeService.findFilteredGrade(username, idSubject, date);
+        List<Subject> subjects = subjectService.findAllSubjects();
+
+        model.addAttribute("selectedSubjectId", idSubject);
+        model.addAttribute("gradesAllForStudent", filteredGradesForStudent);
+        model.addAttribute("subjects", subjects);
 
         return "student-all-grades";
     }
-//
-//    @RequestMapping("/createContact")
-//    public String create(Model model)
-//    {
-//        model.addAttribute("teacher", new Teacher());
-//        return "contact-form";
-//    }
 //
 //    @RequestMapping("/saveContact")
 //    public String saveContact(@ModelAttribute("teacher") Teacher teacher)

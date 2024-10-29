@@ -9,6 +9,7 @@
 <h1>Create grade</h1>
 <form:form action="teacherAddGrade" modelAttribute="grade">
     <input type="hidden" name="idGrade" value="${grade.id}">
+    <p>${errorMessage}</p>
     <div>
         <label>Student:</label>
         <select name="idStudent">
@@ -19,6 +20,7 @@
                         </c:if>>${stud}</option>
             </c:forEach>
         </select>
+<%--        <form:errors cssClass="error" path="student"/>--%>
     </div>
     <div>
         <label>Subject:</label>
@@ -29,14 +31,18 @@
                 </c:if>>${subj}</option>
             </c:forEach>
         </select>
+<%--        <form:errors cssClass="error" path="subject"/>--%>
     </div>
     <div>
         <label>Date:</label>
+
         <input type="date" name="datecurrent" placeholder="Date" value="${grade.datecurrent}"/>
+        <form:errors cssClass="error" path="datecurrent"/>
     </div>
     <div>
         <label>Grade:</label>
         <form:input path="grade" placeholder="grade"/>
+<%--        <form:errors cssClass="error" path="grade"/>--%>
     </div>
     <div>
         <label>Comment:</label>

@@ -18,6 +18,8 @@ public class Student
     private String firstName;
     @Column(name = "last_name")
     private String lastName;
+    @Column(name = "username")
+    private String username;
     @OneToMany(
             cascade = {CascadeType.REFRESH, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE},
             mappedBy = "student",
@@ -58,6 +60,14 @@ public class Student
     public void setLastName(String lastName)
     {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     @Override

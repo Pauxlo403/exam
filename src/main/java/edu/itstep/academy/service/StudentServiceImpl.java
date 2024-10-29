@@ -23,4 +23,24 @@ public class StudentServiceImpl implements StudentService
         return studentRepository.findAllStudents();
     }
 
+    @Override
+    public Student findStudentByUsername(String username)
+    {
+        Student student = null;
+        for(Student stud : studentRepository.findAllStudents())
+        {
+            if(stud.getUsername().equals(username))
+            {
+                student = stud;
+                break;
+            }
+        }
+        return student;
+    }
+
+    @Override
+    public Student findStudentById(int id)
+    {
+        return studentRepository.findStudentById(id);
+    }
 }

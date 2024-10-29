@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -33,6 +34,39 @@ public class GradeRepositoryImpl implements GradeRepository
     {
         sessionFactory
                 .getCurrentSession().saveOrUpdate(grade);
+    }
+
+    @Override
+    @Transactional
+    public List<Grade> findGradesByStudent(int id)
+    {
+       return sessionFactory
+                .getCurrentSession().createQuery("from Grade where student.id =" + id).list();
+    }
+    @Override
+    @Transactional
+    public List<Grade> findGradesBySubject(int idStudent, int idSubject)
+    {
+        return sessionFactory
+                .getCurrentSession().createQuery("from Grade where student.id =" + idStudent
+                + "and subject.id =" +idSubject).list();
+    }
+    @Override
+    @Transactional
+    public List<Grade> findGradesByDate(int idStudent, Date date)
+    {
+        return sessionFactory
+                .getCurrentSession().createQuery("from Grade where student.id = " + idStudent
+                       + " and datecurrent = :date " ).setParameter("date", date).list();
+    }
+
+    @Override
+    @Transactional
+    public List<Grade> findGradesBySubjectAndDate(int idStudent, int idSubject , Date date)
+    {
+        return sessionFactory
+                .getCurrentSession().createQuery("from Grade where student.id =" + idStudent
+                        + " and datecurrent = :date" + " and subject.id =" +idSubject).setParameter("date", date).list();
     }
 
     @Override

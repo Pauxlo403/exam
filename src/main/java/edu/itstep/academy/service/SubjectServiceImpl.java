@@ -22,4 +22,9 @@ public class SubjectServiceImpl implements SubjectService
     {
        return subjectRepository.findAllSubjects();
     }
+    @Override
+    public Subject findSubjectById(int id)
+    {
+        return subjectRepository.findSubjectById(id);
+    }
 }

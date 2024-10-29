@@ -1,27 +1,47 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
-    <h2>Upgade subjects:</h2>
-    <h3>${selectedTeacher.firstName} ${selectedTeacher.lastName}</h3>
-    <form:form action="saveContact" modelAttribute="teacher">
-        <form:hidden path="id"/>
-        <form:hidden path="firstName"/>
-        <form:hidden path="lastName"/>
-        <form:hidden path="age"/>
-        <form:hidden path="phone"/>
-        <form:hidden path="email"/>
-
-        <c:forEach var="subject" items="${allSkills}">
-            <div>
-                <form:checkbox title="asdf" path="subjects" value="${subject}"/>${subject.title}
-            </div>
+<h1>All grades</h1>
+<form:form action="studentFilter">
+    <select name="idSubject" >
+        <option value="0"
+                <c:if test="${0 == selectedSubjectId}">
+                    <c:out value="selected=selected"/>
+                </c:if>>ALL</option>
+        <c:forEach items="${subjects}" var="subj">
+            <option value="${subj.id}"
+                    <c:if test="${subj.id == selectedSubjectId}">
+                        <c:out value="selected=selected"/>
+                    </c:if>>${subj}</option>
         </c:forEach>
-        <input type="submit" value="Save">
-    </form:form >
+    </select>
+    <input type="date" name="dateGrade"/>
+    <input type="submit" value="Filter">
+</form:form>
+
+
+<table>
+    <tr>
+        <th>Subject</th>
+        <th>Student</th>
+        <th>Grade</th>
+        <th>Date</th>
+        <th>Comment</th>
+    </tr>
+    <c:forEach var="grade" items="${gradesAllForStudent}">
+        <tr>
+            <td>${grade.subject.title}</td>
+            <td>${grade.student.firstName} ${grade.student.lastName}</td>
+            <td>${grade.grade}</td>
+            <td>${grade.datecurrent}</td>
+            <td>${grade.comment}</td>
+        </tr>
+    </c:forEach>
+</table>
 </body>
 </html>
