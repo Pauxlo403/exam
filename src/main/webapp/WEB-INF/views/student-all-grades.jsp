@@ -4,11 +4,16 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="/resources/css/style.css" rel="stylesheet"/>
 </head>
-<body>
-<h1>All grades</h1>
-<form:form action="studentFilter">
-    <select name="idSubject" >
+<body class="body">
+<div class="flex-row">
+    <h1>All grades</h1>
+    <input type="button" value="Log out" class="button button_logout" onclick="window.location.href='logout'">
+</div>
+
+<form:form action="studentFilter" cssClass="">
+    <select name="idSubject" class="select">
         <option value="0"
                 <c:if test="${0 == selectedSubjectId}">
                     <c:out value="selected=selected"/>
@@ -21,11 +26,10 @@
         </c:forEach>
     </select>
     <input type="date" name="dateGrade"/>
-    <input type="submit" value="Filter">
+    <input type="submit" value="Filter" class="button button_filter">
 </form:form>
 
-
-<table>
+<table class="table">
     <tr>
         <th>Subject</th>
         <th>Student</th>

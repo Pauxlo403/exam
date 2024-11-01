@@ -1,11 +1,11 @@
 package edu.itstep.academy.service;
 
 import edu.itstep.academy.entity.Grade;
-
 import java.util.Date;
 import java.util.List;
 
-public interface GradeService {
+public interface GradeService
+{
     List<Grade> findAllGrades();
     List<Grade> findAllGradesForStudent(String username);
     List<Grade> findFilteredGrade(String username, int idSubject, Date date);

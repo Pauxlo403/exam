@@ -1,5 +1,3 @@
-
-
 package edu.itstep.academy.configuration;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -13,35 +11,50 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
 @ComponentScan("edu.itstep.academy")
 @EnableWebMvc
 @EnableTransactionManagement
-public class AppConfig {
-    public AppConfig() {
+public class AppConfig implements WebMvcConfigurer {
+    public AppConfig()
+    {
     }
 
     @Bean
-    public InternalResourceViewResolver viewResolver() {
+    public InternalResourceViewResolver viewResolver()
+    {
         InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
         viewResolver.setPrefix("/WEB-INF/views/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
 
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry)
+    {
+        registry.addResourceHandler("/resources/**")
+                .addResourceLocations("/resources/");
+    }
+
     @Bean
-    public DataSource dataSource() {
+    public DataSource dataSource()
+    {
         ComboPooledDataSource comboPooledDataSource = new ComboPooledDataSource();
 
-        try {
+        try
+        {
             comboPooledDataSource.setDriverClass("com.mysql.cj.jdbc.Driver");
             comboPooledDataSource.setJdbcUrl("jdbc:mysql://localhost:3306/academy");
             comboPooledDataSource.setUser("root");
             comboPooledDataSource.setPassword("1234");
             return comboPooledDataSource;
-        } catch (PropertyVetoException var3) {
+        }
+        catch (PropertyVetoException var3)
+        {
             PropertyVetoException e = var3;
             throw new RuntimeException(e);
         }
@@ -58,7 +71,6 @@ public class AppConfig {
         localSessionFactoryBean.setHibernateProperties(properties);
         return localSessionFactoryBean;
     }
-
 
     @Bean
     public HibernateTransactionManager transactionManager() {

@@ -4,15 +4,16 @@
 <html>
 <head>
     <title>Title</title>
+    <link href="/resources/css/style.css" rel="stylesheet"/>
 </head>
-<body>
+<body class="body flex">
 <h1>Create grade</h1>
-<form:form action="teacherAddGrade" modelAttribute="grade">
+<form:form action="teacherAddGrade" modelAttribute="grade" cssClass="form grid">
     <input type="hidden" name="idGrade" value="${grade.id}">
-    <p>${errorMessage}</p>
-    <div>
+    <p class="error">${errorMessage}</p>
+    <div class="grid">
         <label>Student:</label>
-        <select name="idStudent">
+        <select name="idStudent" class="select">
             <c:forEach items="${students}" var="stud">
                 <option value="${stud.id}"
                         <c:if test="${stud.id == grade.student.id}">
@@ -20,35 +21,32 @@
                         </c:if>>${stud}</option>
             </c:forEach>
         </select>
-<%--        <form:errors cssClass="error" path="student"/>--%>
     </div>
-    <div>
+    <div class="grid">
         <label>Subject:</label>
-        <select name="idSubject">
+        <select name="idSubject" class="select">
             <c:forEach items="${subjects}" var="subj">
                 <option value="${subj.id}"  <c:if test="${subj.id == grade.subject.id}">
                     <c:out value="selected=selected"/>
                 </c:if>>${subj}</option>
             </c:forEach>
         </select>
-<%--        <form:errors cssClass="error" path="subject"/>--%>
     </div>
-    <div>
+    <div class="grid">
         <label>Date:</label>
 
         <input type="date" name="datecurrent" placeholder="Date" value="${grade.datecurrent}"/>
         <form:errors cssClass="error" path="datecurrent"/>
     </div>
-    <div>
+    <div class="grid">
         <label>Grade:</label>
         <form:input path="grade" placeholder="grade"/>
-<%--        <form:errors cssClass="error" path="grade"/>--%>
     </div>
-    <div>
+    <div class="grid">
         <label>Comment:</label>
-        <form:input path="comment" placeholder="comment"/>
+        <form:textarea path="comment" placeholder="comment" cssClass="textarea"/>
     </div>
-    <input type="submit" value="Save">
+    <input type="submit" value="Save" class="button button_save">
 </form:form>
 </body>
 </html>

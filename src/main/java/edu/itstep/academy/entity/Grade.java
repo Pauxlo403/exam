@@ -1,7 +1,6 @@
 package edu.itstep.academy.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.util.Date;
 

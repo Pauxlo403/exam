@@ -4,13 +4,8 @@ import edu.itstep.academy.entity.Grade;
 import edu.itstep.academy.entity.Student;
 import edu.itstep.academy.entity.Subject;
 import edu.itstep.academy.repository.GradeRepository;
-import edu.itstep.academy.repository.StudentRepository;
-import edu.itstep.academy.repository.SubjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -42,29 +37,56 @@ public class GradeServiceImpl implements GradeService
     @Override
     public List<Grade> findFilteredGrade(String username, int idSubject, Date date)
     {
-        if(date == null)
+        Student student = studentService.findStudentByUsername(username);
+        if(username.equals("all"))
         {
-            if(idSubject == 0)
+            if(date == null)
             {
-                return findAllGradesForStudent(username);
+                if(idSubject == 0)
+                {
+                    return findAllGrades();
+                }
+                else
+                {
+                    return gradeRepository.findGradesBySubject(idSubject);
+                }
             }
             else
             {
-                Student student = studentService.findStudentByUsername(username);
-                return gradeRepository.findGradesBySubject(student.getId(), idSubject);
+                if(idSubject == 0)
+                {
+                    return gradeRepository.findGradesByDate(date);
+                }
+                else
+                {
+                    return gradeRepository.findGradesBySubjectAndDate(idSubject, date);
+                }
             }
         }
         else
         {
-            if(idSubject == 0)
+            if(date == null)
             {
-                Student student = studentService.findStudentByUsername(username);
-                return gradeRepository.findGradesByDate(student.getId(), date);
+                if(idSubject == 0)
+                {
+
+                    return gradeRepository.findGradesByStudent(student.getId());
+                }
+                else
+                {
+                    return gradeRepository.findGradesByStudentAndSubject(student.getId(), idSubject);
+                }
             }
             else
             {
-                Student student = studentService.findStudentByUsername(username);
-                return gradeRepository.findGradesBySubjectAndDate(student.getId(), idSubject, date);
+                if(idSubject == 0)
+                {
+                    return gradeRepository.findGradesByStudentAndDate(student.getId(), date);
+                }
+                else
+                {
+                    return gradeRepository.findGradesByStudentSubjectAndDate(student.getId(), idSubject, date);
+                }
             }
         }
     }

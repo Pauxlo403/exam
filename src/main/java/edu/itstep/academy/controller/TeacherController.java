@@ -7,14 +7,14 @@ import edu.itstep.academy.service.GradeService;
 import edu.itstep.academy.service.StudentService;
 import edu.itstep.academy.service.SubjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import javax.validation.Valid;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -107,6 +107,25 @@ public class TeacherController
     {
         gradeService.deleteGrade(gradeId);
         return "redirect:/";
+    }
+
+    @RequestMapping("/teacherFilter")
+    public String teacherFilter(@RequestParam("usernameStudent") String usernameStudent,
+                                @RequestParam("idSubject") int idSubject,
+                                @RequestParam("dateGrade") @Nullable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
+                                Model model)
+    {
+        List<Grade> filteredGradesForTeacher = gradeService.findFilteredGrade(usernameStudent, idSubject, date);
+        List<Subject> subjects = subjectService.findAllSubjects();
+        List<Student> students = studentService.findAllStudents();
+
+        model.addAttribute("selectedSubjectId", idSubject);
+        model.addAttribute("gradesAllForTeacher", filteredGradesForTeacher);
+        model.addAttribute("usernameStudent", usernameStudent);
+        model.addAttribute("students", students);
+        model.addAttribute("subjects", subjects);
+
+        return "home";
     }
 
     @RequestMapping("/teacherUpdateGrade")
